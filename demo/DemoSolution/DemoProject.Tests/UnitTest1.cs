@@ -19,7 +19,7 @@ namespace DemoProject.Tests
 
 			// Assert
 			Assert.Equal(108, sut.Result);
-			Assert.Equal("bla", "bla");
+			Assert.Equal("bla4", "bla");
 		}
 
 		[Fact]
