@@ -19,14 +19,23 @@ namespace DemoProject.Tests
 
 			// Assert
 			Assert.Equal(108, sut.Result);
+			Assert.Equal("bla", "bla");
 		}
 
 		[Fact]
 		public void Test1()
 		{
 			Assert.Equal(4, 4);
-			Assert.Equal("hoi", "hoi");
+			Assert.Equal("hoi", "hqqqoi");
 			Assert.NotEqual("hoi", "doei");
+		}
+
+		[Fact]
+		[Trait("type", "perf")]
+		public async Task HierDerdeTest()
+		{
+			//await Task.Delay(5000);
+
 		}
 	}
 }
