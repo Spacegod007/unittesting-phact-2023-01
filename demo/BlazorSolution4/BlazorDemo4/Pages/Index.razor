@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using BlazorDemo4.Entities
 
 <PageTitle>Index</PageTitle>
 
@@ -6,4 +7,17 @@
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+
+<Autocompleter T=Product Data="Products" />
+
+@code {
+    public List<Product> Products { get; set; } = new()
+    {
+        new() { Description = "Muis", Price = 113M },
+        new() { Description = "Lampjes", Price = 19.8M },
+        new() { Description = "Tafel", Price = 113M },
+        new() { Description = "Telefoon", Price = 780M },
+        new() { Description = "Pasje", Price = 5.90M },
+        new() { Description = "Sleutel", Price = 25.9M }
+    };
+}

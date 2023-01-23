@@ -1,15 +1,28 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System.Collections;
 
 namespace BlazorDemo4.Shared
 {
 	public partial class Autocompleter<T> : ComponentBase
 	{
-		public List<T> Data { get; set; }
+		[Parameter] public List<T> Data { get; set; }
 
 		public string Query { get; set; }
 
 		public List<NavigableItem> Suggestions { get; set; }
+
+		public void HandleKeyUp(KeyboardEventArgs args)
+		{
+			if (args.Key.StartsWith("Arrow"))
+			{
+				Next();
+			}
+			else
+			{
+				Autocomplete();
+			}
+		}
 
 		public void Autocomplete()
 		{

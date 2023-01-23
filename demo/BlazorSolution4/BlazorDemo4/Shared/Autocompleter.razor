@@ -1,16 +1,16 @@
-﻿<div class="alert alert-secondary mt-4">
-    <span class="oi oi-pencil me-2" aria-hidden="true"></span>
-    <strong>@Title</strong>
+﻿@using System.Text.Json
+@typeparam T
 
-    <span class="text-nowrap">
-        Please take our
-        <a target="_blank" class="font-weight-bold link-dark" href="https://go.microsoft.com/fwlink/?linkid=2148851">brief survey</a>
-    </span>
-    and tell us what you think.
-</div>
+<input @bind-value="Query" @bind-value:event="oninput" @onkeyup="HandleKeyUp">
 
-@code {
-    // Demonstrates how a parent component can supply parameters
-    [Parameter]
-    public string? Title { get; set; }
+@if (Suggestions != null)
+{
+    <ul>
+        @foreach (var suggestion in Suggestions)
+        {
+            <li class="@(suggestion.IsHighlighted ? "highlight" : "")">
+                <pre>@JsonSerializer.Serialize(suggestion)</pre>
+            </li>
+        }
+    </ul>
 }
