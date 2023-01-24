@@ -1,6 +1,8 @@
+using BlazorDemo4.Services;
 using BlazorDemo4.Shared;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using Newtonsoft.Json.Serialization;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
@@ -12,6 +14,7 @@ namespace BlazorDemo4.Tests
 	{
 		List<Car> _data;
 		Autocompleter<Car> _sut;
+		Mock<INavigateService> _mockNavigateService;
 
 		[TestInitialize]
 		public void Init()
@@ -28,6 +31,18 @@ namespace BlazorDemo4.Tests
 				new() { Make = "Suzuki", Model = "Cube" }
 			};
 			_sut = new Autocompleter<Car>();
+			_mockNavigateService = new Mock<INavigateService>();
+
+			_mockNavigateService.SetupSequence(x => x.Bla())
+				.Returns("hoi")
+				.Returns("Bla");
+
+			_mockNavigateService.Setup(x => x.GetAsync()).ReturnsAsync("hoooi");
+
+			//_mockNavigateService.Setup(x => x.Bla()).Throws
+
+
+			_sut.NavigateService = _mockNavigateService.Object;
 			_sut.Data = _data;
 		}
 
@@ -76,41 +91,53 @@ namespace BlazorDemo4.Tests
 		}
 
 		[TestMethod]
-		public void Next_WithNothingHighlighted_HighlightedFirstSuggestion()
+		public void Next_DoesNotMatter_UseNavigateService()
 		{
 			_sut.Query = "e";
 			_sut.Autocomplete();
 
 			_sut.Next();
 
-			_sut.Suggestions.First().IsHighlighted.Should().Be(true);
-			_sut.Suggestions.Should().ContainSingle(x => x.IsHighlighted);
+			_mockNavigateService.Verify(x => x.Next(It.IsAny<List<NavigableItem<Car>>>()));
+			//_mockNavigateService.Invocations[0].
 		}
 
-		[TestMethod]
-		public void Next_WithFirstSuggestionHighlighted_HighlightedSecondSuggestion()
-		{
-			_sut.Query = "e";
-			_sut.Autocomplete();
-			_sut.Suggestions[0].IsHighlighted = true;
-			
-			_sut.Next();
+		//[TestMethod]
+		//public void Next_WithNothingHighlighted_HighlightedFirstSuggestion()
+		//{
+		//	_sut.Query = "e";
+		//	_sut.Autocomplete();
 
-			_sut.Suggestions[1].IsHighlighted.Should().Be(true);
-			_sut.Suggestions.Should().ContainSingle(x => x.IsHighlighted);
-		}
+		//	_sut.Next();
 
-		[TestMethod]
-		public void Next_WithLastSuggestionHighlighted_HighlightedFirstSuggestion()
-		{
-			_sut.Query = "e";
-			_sut.Autocomplete();
-			_sut.Suggestions.Last().IsHighlighted = true;
+		//	_sut.Suggestions.First().IsHighlighted.Should().Be(true);
+		//	_sut.Suggestions.Should().ContainSingle(x => x.IsHighlighted);
+		//}
 
-			_sut.Next();
+		//[TestMethod]
+		//public void Next_WithFirstSuggestionHighlighted_HighlightedSecondSuggestion()
+		//{
+		//	_sut.Query = "e";
+		//	_sut.Autocomplete();
+		//	_sut.Suggestions[0].IsHighlighted = true;
 
-			_sut.Suggestions.First().IsHighlighted.Should().Be(true);
-			_sut.Suggestions.Should().ContainSingle(x => x.IsHighlighted);
-		}
+		//	_sut.Next();
+
+		//	_sut.Suggestions[1].IsHighlighted.Should().Be(true);
+		//	_sut.Suggestions.Should().ContainSingle(x => x.IsHighlighted);
+		//}
+
+		//[TestMethod]
+		//public void Next_WithLastSuggestionHighlighted_HighlightedFirstSuggestion()
+		//{
+		//	_sut.Query = "e";
+		//	_sut.Autocomplete();
+		//	_sut.Suggestions.Last().IsHighlighted = true;
+
+		//	_sut.Next();
+
+		//	_sut.Suggestions.First().IsHighlighted.Should().Be(true);
+		//	_sut.Suggestions.Should().ContainSingle(x => x.IsHighlighted);
+		//}
 	}
 }
