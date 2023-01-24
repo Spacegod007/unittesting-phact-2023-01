@@ -33,11 +33,11 @@ namespace BlazorDemo4.Tests
 			_sut = new Autocompleter<Car>();
 			_mockNavigateService = new Mock<INavigateService>();
 
-			_mockNavigateService.SetupSequence(x => x.Bla())
-				.Returns("hoi")
-				.Returns("Bla");
+			//_mockNavigateService.SetupSequence(x => x.Bla())
+			//	.Returns("hoi")
+			//	.Returns("Bla");
 
-			_mockNavigateService.Setup(x => x.GetAsync()).ReturnsAsync("hoooi");
+			//_mockNavigateService.Setup(x => x.GetAsync()).ReturnsAsync("hoooi");
 
 			//_mockNavigateService.Setup(x => x.Bla()).Throws
 

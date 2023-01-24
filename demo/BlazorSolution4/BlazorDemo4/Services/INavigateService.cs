@@ -6,8 +6,8 @@ namespace BlazorDemo4.Services
     {
         void Next<T>(List<NavigableItem<T>> data);
 
-        string Bla();
+        //string Bla();
 
-        Task<string> GetAsync();
+        //Task<string> GetAsync();
     }
 }
