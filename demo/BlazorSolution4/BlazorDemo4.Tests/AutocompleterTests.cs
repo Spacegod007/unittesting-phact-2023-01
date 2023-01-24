@@ -1,5 +1,7 @@
 using BlazorDemo4.Shared;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Serialization;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
 
@@ -35,14 +37,13 @@ namespace BlazorDemo4.Tests
 			_sut.Query = "e";
 			_sut.Autocomplete();
 
-			var expected = new List<Car>
+			_sut.Suggestions.Select(x => x.Item).Should().ContainInOrder(new Car[]
 			{
 				_data[0],
 				_data[1],
 				_data[4],
 				_data[7]
-			};
-			CollectionAssert.AreEquivalent(expected, _sut.Suggestions.Select(x => x.Item).ToList());
+			});
 		}
 
 		[TestMethod]
@@ -51,14 +52,13 @@ namespace BlazorDemo4.Tests
 			_sut.Query = "o";
 			_sut.Autocomplete();
 
-			var expected = new List<Car>
+			_sut.Suggestions.Select(x => x.Item).Should().ContainInOrder(new Car[]
 			{
 				_data[0],
 				_data[1],
 				_data[2],
 				_data[4]
-			};
-			CollectionAssert.AreEquivalent(expected, _sut.Suggestions.Select(x => x.Item).ToList());
+			});
 		}
 
 		[TestMethod]
@@ -67,13 +67,12 @@ namespace BlazorDemo4.Tests
 			_sut.Query = "R";
 			_sut.Autocomplete();
 
-			var expected = new List<Car>
+			_sut.Suggestions.Select(x => x.Item).Should().ContainInOrder(new Car[]
 			{
 				_data[0],
 				_data[1],
 				_data[4]
-			};
-			CollectionAssert.AreEquivalent(expected, _sut.Suggestions.Select(x => x.Item).ToList());
+			});
 		}
 
 		[TestMethod]
@@ -84,8 +83,8 @@ namespace BlazorDemo4.Tests
 
 			_sut.Next();
 
-			Assert.IsTrue(_sut.Suggestions[0].IsHighlighted);
-			Assert.AreEqual(1, _sut.Suggestions.Count(x => x.IsHighlighted));
+			_sut.Suggestions.First().IsHighlighted.Should().Be(true);
+			_sut.Suggestions.Should().ContainSingle(x => x.IsHighlighted);
 		}
 
 		[TestMethod]
@@ -97,8 +96,8 @@ namespace BlazorDemo4.Tests
 			
 			_sut.Next();
 
-			Assert.IsTrue(_sut.Suggestions[1].IsHighlighted);
-			Assert.AreEqual(1, _sut.Suggestions.Count(x => x.IsHighlighted));
+			_sut.Suggestions[1].IsHighlighted.Should().Be(true);
+			_sut.Suggestions.Should().ContainSingle(x => x.IsHighlighted);
 		}
 
 		[TestMethod]
@@ -110,8 +109,8 @@ namespace BlazorDemo4.Tests
 
 			_sut.Next();
 
-			Assert.IsTrue(_sut.Suggestions[0].IsHighlighted);
-			Assert.AreEqual(1, _sut.Suggestions.Count(x => x.IsHighlighted));
+			_sut.Suggestions.First().IsHighlighted.Should().Be(true);
+			_sut.Suggestions.Should().ContainSingle(x => x.IsHighlighted);
 		}
 	}
 }
