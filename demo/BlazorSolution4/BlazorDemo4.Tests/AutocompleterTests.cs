@@ -101,43 +101,5 @@ namespace BlazorDemo4.Tests
 			_mockNavigateService.Verify(x => x.Next(It.IsAny<List<NavigableItem<Car>>>()));
 			//_mockNavigateService.Invocations[0].
 		}
-
-		//[TestMethod]
-		//public void Next_WithNothingHighlighted_HighlightedFirstSuggestion()
-		//{
-		//	_sut.Query = "e";
-		//	_sut.Autocomplete();
-
-		//	_sut.Next();
-
-		//	_sut.Suggestions.First().IsHighlighted.Should().Be(true);
-		//	_sut.Suggestions.Should().ContainSingle(x => x.IsHighlighted);
-		//}
-
-		//[TestMethod]
-		//public void Next_WithFirstSuggestionHighlighted_HighlightedSecondSuggestion()
-		//{
-		//	_sut.Query = "e";
-		//	_sut.Autocomplete();
-		//	_sut.Suggestions[0].IsHighlighted = true;
-
-		//	_sut.Next();
-
-		//	_sut.Suggestions[1].IsHighlighted.Should().Be(true);
-		//	_sut.Suggestions.Should().ContainSingle(x => x.IsHighlighted);
-		//}
-
-		//[TestMethod]
-		//public void Next_WithLastSuggestionHighlighted_HighlightedFirstSuggestion()
-		//{
-		//	_sut.Query = "e";
-		//	_sut.Autocomplete();
-		//	_sut.Suggestions.Last().IsHighlighted = true;
-
-		//	_sut.Next();
-
-		//	_sut.Suggestions.First().IsHighlighted.Should().Be(true);
-		//	_sut.Suggestions.Should().ContainSingle(x => x.IsHighlighted);
-		//}
 	}
 }

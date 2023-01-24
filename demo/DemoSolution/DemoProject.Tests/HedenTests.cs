@@ -25,5 +25,22 @@ namespace DemoProject.Tests
 				Assert.Equal("10:15", result);
 			}
 		}
+
+		[Fact]
+		public void DirTest()
+		{
+			using (ShimsContext.Create())
+			{
+				System.IO.Fakes.ShimDirectory.ExistsString = path =>
+				{
+					return true;
+				};
+
+				var sut = new Heden();
+				var result = sut.WriteFile();
+
+				Assert.Equal("yay bestaat", result);
+			}
+		}
 	}
 }
