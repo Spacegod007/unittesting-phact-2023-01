@@ -101,14 +101,49 @@ SlaGebruikerOp()
 prod: service - repository - database
 test: service - mock<repository>
 
+## Testing difficult code
 
+### Lastige code?
 
+- extension methods
+- static
+- objecten zonder interface
+  - low-level COM-objecten
+  - ook managed code
 
+- hardcoded values
+- structs
+- databases
+- libraries
+- networkinterfaces
+  - REST-calls, APIs
+- concurrency
+- race conditions
 
+### Mocking
 
+test doubles:
+- dummies: parameteropvulling
+  ```cs
+  void GetLocation(string param1, object param2, object param3)
+	{
 
+	}
+  ```
+- fakes: nepdata
+- stubs: registreert info
+  - of een methode is aangeroepen
+  - hoe vaak een methode is aangeroepen
+  - met welke params een methode is aangeroepen
+- mocks
+  - nepgedrag
 
+mock frameworks
+- Moq
+- NSubstitute
+- RhinoMocks (ooooouuuuuuuuuuuuuuddddddddddddd)
+- FakeItEasy
+- TypeMock (zit op IL-niveau)
+- JustMock van Telerik (zit op IL-niveau)
 
-
-
-
+Iets van IoC helpt heel erg bij het naar binnen schuiven van test doubles/mocks: dependency injection, constructor injection, field injection. Bij bestaande projecten kan dat architecturale wijzigingen betekenen.
